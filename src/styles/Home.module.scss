@@ -1,0 +1,192 @@
+@import "mixins.scss";
+@import "variables.scss";
+
+.container {
+    @include flexContainerColumn();
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background-color: white;
+    color: black;
+    position: relative;
+    transition: background-color 0.5s;
+    .header {
+        @include flexContainerRow();
+        h1 {
+            font-size: 48px;
+        }
+        svg {
+            font-size: 36px;
+            margin-left: 3vw;
+            cursor: pointer;
+        }
+    }
+    .pokemonsList {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        width: 100%;
+        font-family: $mainFont;
+        row-gap: 40px;
+        .pokemonListItem {
+            @include flexContainerColumn();
+            grid-column: span 3;
+            .pokemonListItemBox {
+                @include flexContainerColumn();
+                width: 80%;
+                padding: 10px;
+                box-sizing: border-box;
+                box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.25);
+                &:hover {
+                    box-shadow: $highlightShadow;
+                }
+                cursor: pointer;
+                img {
+                    width: 50%;
+                }
+                div {
+                    font-size: $fontSize;
+                }
+                .pokemonDetailsPopup {
+                    @include flexContainerColumn();
+                    position: fixed;
+                    width: 100vw;
+                    height: 100vh;
+                    max-width: 100%;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 100;
+                    background-color: rgba(0, 0, 0, 0.6);
+                    cursor: pointer;
+                    .pokemonCard {
+                        @include flexContainerColumn();
+                        background-color: white;
+                        font-size: $fontSize;
+                        width: 40%;
+                        height: 80%;
+                        div {
+                            margin-top: 16px;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+    .loadMoreButton {
+        border: none;
+        color: white;
+        background-color: #008CBA;
+        padding: 20px;
+        margin: 20px 0;
+        font-size: $fontSize;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        &:hover {
+            background-color: #005e7d;
+        }
+    }
+}
+
+.filterOptions {
+    @include flexContainerRow();
+    width: 100%;
+    justify-content: space-around;
+    margin: 4vh 0;
+    input {
+        width: 30%;
+        height: 40px;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        outline: none;
+        border: none;
+        font-family: $mainFont;
+    }
+    .selectContainer {
+        width: 30%;
+        height: 40px;
+        font-family: $mainFont;
+        p {
+            @include nonSelectableText();
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 8px 12px;
+            height: 40px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        .selectContent {
+            @include flexContainerColumn();
+            align-items: flex-start;
+            width: 100%;
+            display: none;
+            div {
+                width: 100%;
+                height: 60vh;
+                overflow-y: scroll;
+                .selectItem {
+                    @include flexContainerRow();
+                    @include nonSelectableText();
+                    justify-content: space-between;
+                    width: 100%;
+                    padding: 8px 12px;
+                    height: 40px;
+                    box-sizing: border-box;
+                    border: 1px solid black;
+                    border-width: 0 1px 1px 1px;
+                    z-index: 100;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    &:hover {
+                        background-color: rgb(55, 55, 55);
+                    }
+                    overflow-y: hidden;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpointTablet) {
+    .container {
+        .pokemonsList {
+            .pokemonListItem {
+                grid-column: span 6;
+                .pokemonListItemBox {
+                    .pokemonDetailsPopup{
+                        .pokemonCard {
+                            width: 60%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpointPhone) {
+    .container {
+        .pokemonsList {
+            .pokemonListItem {
+                grid-column: span 12;
+                .pokemonListItemBox {
+                    .pokemonDetailsPopup{
+                        .pokemonCard {
+                            width: 80%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .filterOptions {
+        @include flexContainerColumn();
+        input, .selectContainer {
+            width: 80%;
+            margin-top: 1vh;
+        }
+    }
+}
